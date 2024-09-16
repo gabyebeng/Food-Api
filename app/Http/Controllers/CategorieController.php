@@ -8,28 +8,28 @@ use Illuminate\Http\Request;
 
 class CategorieController extends Controller
 {
-    public function getAll(){
+    public function getAll()
+    {
 
-        try{
+        try {
 
             $categories = Categorie::all();
 
             return response()->json([
-                'status_message'=>'Catégories récupérés',
-                'data'=>[
-                    'items'=>$categories,
-                    'total'=>$categories->count()
+                'status_message' => 'Catégories récupérés',
+                'data' => [
+                    'items' => $categories,
+                    'total' => $categories->count()
                 ],
-                'status_code'=>200
-            ],200);
+                'status_code' => 200
+            ], 200);
 
 
-        }catch(Exception $exception){
-
+        } catch (Exception $exception) {
             return response()->json([
-                'status_message'=>$exception->getMessage(),
-                'status_code'=>500,
-                'data'=>null
+                'status_message' => $exception->getMessage(),
+                'status_code' => 500,
+                'data' => null
             ], 500);
         }
 
