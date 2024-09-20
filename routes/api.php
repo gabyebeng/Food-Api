@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\clientMiddlewaare;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,12 +22,14 @@ Route::prefix('foods')->group(function () {
     Route::get('all', [FoodController::class, 'Paginate']);
     Route::get('{id}', [FoodController::class, 'getOne']);
 });
-route::prefix('orders')->group(function () {
-    route::get('/', function () {
-        return 'test';
+
+route::middleware('mobile.auth')->group(function () {
+    route::prefix('orders')->group(function () {
+        route::get('/', function () {
+            return 'test';
+        });
     });
 });
-route::middleware('mobile.auth')->group(function () {
-
+route::prefix('orders')->group(function () {
+    route::post('/create', [OrderController::class, 'saveOrder']);
 });
-

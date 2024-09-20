@@ -23,12 +23,14 @@ class UserController extends Controller
                 'main_phone' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:4'
+            ], [
+                'email.unique' => 'cette adresse mail est déja asssociée à un compte'
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'status_code' => 422,
-                    'status_message' => 'Données invalide',
+                    'status_message' => $validator->errors(),
                     'data' => null
                 ], 422);
             }
