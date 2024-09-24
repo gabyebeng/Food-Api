@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -16,7 +17,8 @@ return new class extends Migration {
             $table->foreign('order_id')->references('id')->on('orders');
             $table->unsignedBigInteger('food_id');
             $table->foreign('food_id')->references('id')->on('foods');
-            $table->enum('status', ['PENDING', 'IN_DELIVERY', 'DELIVERED', 'CANCELED'])->default('PENDING');
+            $table->integer('quantity');
+            $table->enum('status',['PENDING','IN_DELIVERY','DELIVERED','CANCELED'])->default('PENDING');
             $table->dateTime('delivered_date')->nullable();
             $table->timestamps();
         });

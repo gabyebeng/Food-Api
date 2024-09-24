@@ -5,22 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class order extends Model
+class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public static function createWithFood($orderData, $items)
-    {
+
+    public function foods(){
+        return $this->belongsToMany(Food::class,'order_foods')->withPivot('quantity','status','delivered_date')->withTimeStamps();
+    }
+
+
+    public static function createWithFood($orderData,$items){
+
         $order = self::create($orderData);
+        //Rattacher les foods a la commande
 
-        foreach ($items as $item) {
-            $order->foods()->attach($item, ['id'], ['quantity' => $item('quantity')]);
+        foreach($items as $item){
 
-
-            return $order;
-            # code...
+            $order->foods()->attach($item['id'],['quantity'=>$item['quantity']]);
         }
 
+        return $order;
+
     }
+
 }
